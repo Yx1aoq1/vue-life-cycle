@@ -1,24 +1,96 @@
-# vue-life-test
+# Vue 生命周期探究
 
-## Project setup
-```
-yarn install
-```
+## 父子孙组件创建顺序
 
-### Compiles and hot-reloads for development
 ```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
+Parent beforeCreate
+Parent created
+Parent beforeMount
+Children beforeCreate
+Children created
+Children beforeMount
+Grandson beforeCreate
+Grandson created
+Grandson beforeMount
+Grandson mounted
+Children mounted
+Parent mounted
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 父子孙销毁顺序
+
+```
+Parent beforeDestroy
+Children beforeDestroy
+Grandson beforeDestroy
+Grandson destroyed
+Children destroyed
+Parent destroyed
+```
+
+## 存在keep-alive缓存时
+
+### 创建
+
+```
+Parent beforeCreate
+Parent created
+Parent beforeMount
+Children beforeCreate
+Children created
+Children beforeMount
+Grandson beforeCreate
+Grandson created
+Grandson beforeMount
+Grandson mounted
+Children mounted
+Parent mounted
+--- 创建 ---
+Grandson activated
+Children activated
+Parent activated
+```
+
+### 销毁
+
+```
+Grandson deactivated
+Children deactivated
+Parent deactivated
+```
+
+## 存在路由守卫时
+
+### 创建
+
+```
+Parent beforeRouteEnter
+--- 进入路由 ---
+Parent beforeCreate
+Parent created
+Parent beforeMount
+Children beforeCreate
+Children created
+Children beforeMount
+Grandson beforeCreate
+Grandson created
+Grandson beforeMount
+Grandson mounted
+Children mounted
+Parent mounted
+--- 创建 ---
+```
+
+### 销毁
+
+```
+Parent beforeRouteLeave
+--- 离开路由 ---
+Parent beforeDestroy
+Children beforeDestroy
+Grandson beforeDestroy
+Grandson destroyed
+Children destroyed
+Parent destroyed
+--- 销毁 ---
+```
